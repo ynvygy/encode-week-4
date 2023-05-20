@@ -13,7 +13,6 @@ export class AppService {
   constructor(private configService: ConfigService) {
     const apiKey = this.configService.get<string>('ALCHEMY_API_KEY')
     this.provider = new ethers.providers.AlchemyProvider('maticmum', apiKey)
-    //this.provider = ethers.getDefaultProvider("sepolia")
     this.contract = new ethers.Contract(this.getAddress(), tokenJson.abi, this.provider)
     this.ballot_contract = new ethers.Contract(this.getBallotAddress(), ballotJson.abi, this.provider)
   }
