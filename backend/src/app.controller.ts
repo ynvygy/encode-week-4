@@ -3,6 +3,8 @@ import { AppService } from './app.service';
 import { ethers } from 'ethers';
 import * as tokenJson from "./assets/MyToken.json";
 import { RequestTokensDto } from './dtos/requestTokens.dto';
+import { DelegateTokensDto } from './dtos/delegateTokens.dto';
+import { CastVoteDto } from './dtos/castVote.dto';
 
 @Controller()
 export class AppController {
@@ -47,5 +49,15 @@ export class AppController {
   @Post("request-tokens")
   requestTokens(@Body() body: RequestTokensDto) {
     return this.appService.requestTokens(body.address, body.signature)
+  }
+
+  @Post("delegate-tokens")
+  delegateTokens(@Body() body: DelegateTokensDto) {
+    return this.appService.delegateTokens(body.address)
+  }
+
+  @Post("cast-vote")
+  castVote(@Body() body: CastVoteDto) {
+    return this.appService.castVote()
   }
 }
