@@ -42,6 +42,8 @@ function WalletInfo() {
 			<WalletBalance></WalletBalance>
 			<ApiInfo></ApiInfo>
 			<RequestTokens></RequestTokens>
+			<DelegateTokens></DelegateTokens>
+			<CastVote></CastVote>
 		</>
 	)
 	if (isLoading) return (
@@ -126,6 +128,64 @@ function requestTokens(signer, signature, setLoading, setTxData) { setLoading(tr
 		body: JSON.stringify({ address: signer._address, signature: signature }) 
 	}; 
 	fetch('http://localhost:3001/request-tokens', requestOptions) 
+		.then(response => response.json()) 
+		.then((data) => { setTxData(data); setLoading(true); 
+	});
+}
+
+function DelegateTokens() {
+	const {data : signer } = useSigner();
+	const [txData, setTxData] = useState(null);
+	const [isLoading, setLoading] = useState(false);
+	
+	if (txData) return ( <div> <p>Transaction completed!</p> <a href={"https://mumbai.polygonscan.com/tx/" + txData.hash} target="_blank">{txData.hash}</a> </div> ) 
+	if (isLoading) return <p>Requesting tokens to be minted...</p>;
+	
+	return (
+		<div> 
+			<button onClick={() => delegateTokens(signer, setLoading, setTxData)}>Request Tokens</button>
+		</div>
+	)
+}
+
+function delegateTokens(signer, setLoading, setTxData) { setLoading(true); 
+	const requestOptions = { 
+		method: 'POST', 
+		headers: { 
+			'Content-Type': 'application/json' 
+		}, 
+		body: JSON.stringify({ address: signer._address }) 
+	}; 
+	fetch('http://localhost:3001/delegate-tokens', requestOptions) 
+		.then(response => response.json()) 
+		.then((data) => { setTxData(data); setLoading(true); 
+	});
+}
+
+function CastVote() {
+	const {data : signer } = useSigner();
+	const [txData, setTxData] = useState(null);
+	const [isLoading, setLoading] = useState(false);
+	
+	if (txData) return ( <div> <p>Transaction completed!</p> <a href={"https://mumbai.polygonscan.com/tx/" + txData.hash} target="_blank">{txData.hash}</a> </div> ) 
+	if (isLoading) return <p>Requesting tokens to be minted...</p>;
+	
+	return (
+		<div> 
+			<button onClick={() => castVote(setLoading, setTxData)}>Request Tokens</button>
+		</div>
+	)
+}
+
+function castVote(setLoading, setTxData) { setLoading(true); 
+	const requestOptions = { 
+		method: 'POST', 
+		headers: { 
+			'Content-Type': 'application/json' 
+		}, 
+		body: JSON.stringify({ address: signer._address }) 
+	}; 
+	fetch('http://localhost:3001/cast-vote', requestOptions) 
 		.then(response => response.json()) 
 		.then((data) => { setTxData(data); setLoading(true); 
 	});
