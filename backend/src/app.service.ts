@@ -62,17 +62,22 @@ export class AppService {
     return this.contract.connect(signer).mint(address, ethers.utils.parseUnits("1"));
   }
 
-  async delegateTokens(address: string) {
-    const pKey = this.configService.get<string>('PRIVATE_KEY')
-    const wallet = new ethers.Wallet(pKey)
-    const signer = wallet.connect(this.provider)
-    return this.contract.connect(signer).delegate(address)
-  }
+  // Was the initial idea but i realised it's incorrect.
+  //async delegateTokens(address: string) {
+  //  const pKey = this.configService.get<string>('PRIVATE_KEY')
+  //  const wallet = new ethers.Wallet(pKey)
+  //  const signer = wallet.connect(this.provider)
+  //  return this.contract.connect(signer).delegate(address)
+  //}
 
-  async castVote() {
-    const pKey = this.configService.get<string>('PRIVATE_KEY')
-    const wallet = new ethers.Wallet(pKey)
-    const signer = wallet.connect(this.provider)
-    return this.contract.connect(signer).castVote(0, ethers.utils.parseUnits("1"))
+  //async castVote() {
+  //  const pKey = this.configService.get<string>('PRIVATE_KEY')
+  //  const wallet = new ethers.Wallet(pKey)
+  //  const signer = wallet.connect(this.provider)
+  //  return this.ballot_contract.connect(signer).vote(0, ethers.utils.parseUnits("1"))
+  //}
+
+  async getWinner() {
+    return this.ballot_contract.winnerName()
   }
 }

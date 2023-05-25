@@ -51,13 +51,18 @@ export class AppController {
     return this.appService.requestTokens(body.address, body.signature)
   }
 
-  @Post("delegate-tokens")
-  delegateTokens(@Body() body: DelegateTokensDto) {
-    return this.appService.delegateTokens(body.address)
-  }
+  //@Post("delegate-tokens")
+  //delegateTokens(@Body() body: DelegateTokensDto) {
+  //  return this.appService.delegateTokens(body.address)
+  //}
 
-  @Post("cast-vote")
-  castVote(@Body() body: CastVoteDto) {
-    return this.appService.castVote()
+  //@Post("cast-vote")
+  //castVote(@Body() body: CastVoteDto) {
+  //  return this.appService.castVote()
+  //}
+
+  @Get("get-winner")
+  async getWinner() {
+    return this.appService.getWinner();
   }
 }
